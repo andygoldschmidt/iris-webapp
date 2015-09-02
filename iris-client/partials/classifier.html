@@ -1,0 +1,46 @@
+<div class="col-md-5">
+    <h1>Random Forest classifier</h1>
+
+    <div>
+        <h3>Select a file</h3>
+        <input class="form-control" type="file" nv-file-select uploader="uploader">
+    </div>
+    <div>
+        <div id="target-box" ng-show="availableFields && payload.data">
+            <h3>Target column</h3>
+            <select name="target" id="target" ng-options="field for field in availableFields" ng-model="payload.targetColumn">
+            </select>
+        </div>
+        <div id="feature-box" ng-show="payload.targetColumn" ng-init="featuresObj={}">
+            <h3>Features</h3>
+            <div ng-repeat="field in availableFields | filter: '!' + payload.targetColumn" class="checkbox">
+                <input type="checkbox" ng-init="featuresObj[field] = true" ng-model="featuresObj[field]" name="{{field}}" value="{{field}}" checked> {{field}}<br>
+            </div>
+        </div>
+        <button class="btn btn-primary" ng-click="send()" ng-show="payload.targetColumn">Classify!</button>
+    </div>
+</div>
+<div class="col-md-7" ng-show="classification.results">
+    <h1>Classification results</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th></th>
+            <th ng-repeat="label in classification.labels">
+                {{label}}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="label in classification.labels">
+            <td><strong>{{label}}</strong></td>
+            <td ng-repeat="innerLabel in classification.labels">
+                {{classification.results[label][innerLabel]}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <strong>Accuracy score:</strong> {{classification.accuracy | number: 3}}
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="col-md-6 col-md-offset-3">
+    <h1>Color analyzer</h1>
+
+    <div>
+        <h3>Select a file</h3>
+        <input class="form-control" type="file" nv-file-select uploader="uploader">
+        <div ng-repeat="item in uploader.queue">
+            <div ng-thumb="{ file: item._file, height: 200 }"></div>
+        </div>
+        <div class="swatches">
+            <h3>Dominant colors</h3>
+            <div ng-repeat="c in colors" class="swatch" ng-style="{'background-color': 'rgb('+c[0]+','+c[1]+','+c[2]+')'}"></div>
+        </div>
+    </div>
+</div>
